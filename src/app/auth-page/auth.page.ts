@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { Observable, of, tap } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -9,6 +10,7 @@ import { AuthService } from '../auth.service';
 })
 export class AuthPage implements OnInit {
 
+  public btnShowUp$: Observable<boolean> = of(true);
   public formGroup!: FormGroup;
 
   constructor(
@@ -30,7 +32,9 @@ export class AuthPage implements OnInit {
 
 
   public onSubmit() {
-    this._authServie.login().subscribe();
+    // this.formGroup.
+    this.btnShowUp$ = of(false);
+    this.btnShowUp$ = this._authServie.login(this.formGroup.value);
   }
 
   get email() {

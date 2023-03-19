@@ -1,0 +1,32 @@
+<form [formGroup]="signUpFormGroup" (ngSubmit)="onSubmit()">
+  <div class="email">
+    <label for="email">Email Address:</label>
+    <input id="email" formControlName="email" type="email" required />
+    <div class="errors" *ngIf="email?.invalid && email?.touched">
+      <div *ngIf="email?.errors?.['email']" class="errors">
+        Введите корректный email
+      </div>
+      <div *ngIf="email?.errors?.['required']" class="errors">
+        Поле является обязательным для заполнения
+      </div>
+    </div>
+  </div>
+  <div class="password">
+    <label for="password">Password:</label>
+    <input id="password" formControlName="password" type="password" required />
+    <div class="errors" *ngIf="password?.invalid && password?.touched">
+      <div *ngIf="password?.errors?.['minlength']" class="errors">
+        Минимальная длина пароля 5 символов
+      </div>
+      <div *ngIf="password?.errors?.['required']" class="errors">
+        Поле является обязательным для заполнения
+      </div>
+    </div>
+  </div>
+  <button class="sign-up" type="submit" [disabled]="!signUpFormGroup.valid">
+    Sign Up
+  </button>
+  <div class="footer">
+    <span (click)="toLogin()">&#8592; Back to Login</span>
+  </div>
+</form>

@@ -6,11 +6,13 @@ import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthPage } from './auth-page/auth.page';
 import { MainModule } from './main/main.module';
+import { SignUpPage } from './sign-up/sign-up.page';
 
 @NgModule({
   declarations: [
     AppComponent,
     AuthPage,
+    SignUpPage,
   ],
   imports: [
     BrowserModule,

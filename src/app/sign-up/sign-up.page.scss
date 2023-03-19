@@ -1,0 +1,51 @@
+div:not(div.footer, div.sec-2, div.errors),
+form {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 2em #e6e9f9;
+}
+
+form {
+  background: #f1f7fe;
+  padding: 2em;
+  border-radius: 30px;
+  gap: 2em;
+}
+
+.email,
+.password {
+  background: white;
+  padding: 1em;
+  gap: 0.5em;
+  border-radius: 20px;
+}
+
+.sign-up {
+  padding: 1em;
+  background: #3e4684;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+input {
+  outline: none;
+  border: none;
+}
+
+div.footer > span,
+div.errors {
+  cursor: pointer;
+  font-size: small;
+}
+
+form > div:not(span) {
+  width: 300px;
+}
+
+div.errors {
+  color: palevioletred;
+  box-shadow: none;
+}

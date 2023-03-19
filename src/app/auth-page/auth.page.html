@@ -36,6 +36,19 @@
     </span>
   </form>
   <span class="input-holder btn">
-    <button type="submit" [disabled]="" form="authForm">SUBMIT</button>
+    <button
+      *ngIf="btnShowUp$ | async; else skeleton"
+      type="submit"
+      [disabled]="formGroup.invalid"
+      form="authForm"
+    >
+      Log In
+    </button>
+    <ng-template class="spinning-skeleton" #skeleton>
+      <div class="spinning-skeleton">
+        <div class="spinner"></div>
+      </div>
+    </ng-template>
   </span>
+  <div><a href="/sign-up">SignUp</a></div>
 </div>
