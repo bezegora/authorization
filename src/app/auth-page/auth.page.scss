@@ -1,122 +1,75 @@
-div.container {
-  // background-color: cornflowerblue;
-  margin: auto;
-  // border-radius: 40px;
-}
-
-h1 {
-  text-align: center;
+div:not(div.footer, div.sec-2, div.errors, div.spinning-skeleton, div.spinner),
+form {
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 0 2em #e6e9f9;
+  justify-content: center;
 }
 
 form {
-  background-color: #f1f7fe;
+  background: #f1f7fe;
+  padding: 2em;
   border-radius: 30px;
-  height: 270px;
-  justify-content: space-around;
-  // border-left: cornflowerblue 5px solid;
-  justify-content: center;
+  gap: 2em;
 }
 
-div.container {
-  width: 300px;
-  height: 400px;
-  padding: 16px;
-  margin: calc(50vh - 250px) auto calc(50vh - 240px) auto;
-  clear: both;
-  // overflow: hidden;
-  align-items: center;
-  align-content: center;
-  // text-align: center;
-  justify-content: center;
+.email,
+.password {
+  background: white;
+  padding: 1em;
+  gap: 0.5em;
+  border-radius: 20px;
 }
 
-div.container span.label-holder {
-  display: table;
-  display: block;
-  width: 80%;
+div.button {
+  padding: 1em;
+  background: #3e4684;
+  color: white;
+  border: none;
+  border-radius: 30px;
+  font-weight: 600;
   height: 40px;
-  float: left;
-  padding: 18px 18px 0 18px;
-  margin-top: 10px;
+  cursor: pointer;
 }
 
-div.container span.input-holder {
-  display: block;
-  width: 80%;
-  height: 20px;
-  float: left;
-  padding: 0 18px 18px 18px;
+.login {
+  height: 40px;
+  background-color: #3e4684;
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+  font-size: large;
+}
+
+div.button:has(.login:disabled, div.spinning-skeleton),
+.login:disabled {
+  background-color: #595d7c;
+  cursor: default;
 }
 
 input {
-  width: 100%;
-  height: 100%;
-  // border-radius: 10px;
-  // border-color: beige;
-  padding: 3px;
-}
-
-label {
-  margin-top: 50px;
-  font-size: xx-large;
-}
-
-span {
-  margin: 0;
-  padding: 0;
-}
-
-.ng-valid[required],
-.ng-valid.required {
-  border-left: 5px solid #42a948;
-}
-
-.ng-invalid:not(form) {
-  border-left: 5px solid #a94442;
-}
-
-.alert div {
-  background-color: #fed3d3;
-  color: #820000;
-  padding: 5px;
-  // height: 50px;
-  width: 100%;
-  // border-radius: 20px;
-  margin-top: 5px;
-  text-align: center;
-}
-
-div.container span.input-holder.btn {
-  margin-top: 10px;
-  text-align: center;
-  padding: 0;
-  // width: 38px;
-  height: 40px;
-  width: 300px;
-  border-radius: 30px;
-  overflow: hidden;
-}
-
-button {
-  // width: 100%;
-  // height: 100%;
-  background-color: #3e4684;
-  // border-radius: 20px;
+  outline: none;
   border: none;
-  height: 40px;
+}
+
+div.footer > span,
+div.errors {
+  cursor: pointer;
+  font-size: small;
+}
+
+form > div:not(span) {
   width: 300px;
-  font-weight: bold;
-  font-size: medium;
-  color: white;
+}
+
+div.errors {
+  color: palevioletred;
+  box-shadow: none;
 }
 
 div.spinning-skeleton {
-  background-color: rgb(172, 191, 226);
-  border: none;
-  height: 40px;
-  width: 300px;
-  font-weight: bold;
-  font-size: medium;
+  background-color: #595d7c;
   display: flex;
   justify-content: center;
   align-content: center;
@@ -124,13 +77,14 @@ div.spinning-skeleton {
 }
 
 div.spinning-skeleton div.spinner {
-  width: 20px;
-  height: 20px;
-  border: 2px solid #f3f3f3;
+  width: 2em;
+  height: 2em;
+  border: 3px solid #f3f3f3;
   border-top: 3px solid #3e4684;
   border-radius: 100%;
   margin: auto;
-  animation: spin 1s infinite linear;
+  animation: spin 1s infinite ease-in;
+  padding: 0;
 }
 
 @keyframes spin {

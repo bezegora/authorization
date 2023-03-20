@@ -6,6 +6,9 @@ import { delay, map, Observable, of, tap } from 'rxjs';
   providedIn: 'root'
 })
 export class AuthService {
+  private users!: { email: string, password: string }[];
+  public isLoggedIn: boolean = false;
+
   constructor(private _router: Router) {
     this.users = [
       {
@@ -14,40 +17,31 @@ export class AuthService {
       },
     ];
   }
-  private users: [{ email: string, password: string }];
-
-  public isLoggedIn: boolean = false;
 
   public login(user: { email: string, password: string }): Observable<boolean> {
-    console.log(user);
-
     return of(this.isLoggedIn).pipe(
       delay(1500),
       map((v: boolean) => {
-        console.log(this.users.indexOf(user));
-        console.log(this.users);
-        if (this.users.indexOf(user) != -1) {
-          this.isLoggedIn = true;
-          v = true;
-          console.log(v);
-          this._router.navigate(['/']);
-          return v
-        }
-        return v;
+        this.users.forEach(u => {
+          if (u.email == user.email && u.password == user.password) {
+            this.isLoggedIn = true;
+            this._router.navigate(['/']);
+          }
+        });
+        v = this.isLoggedIn;
+        return true;
       })
     );
   }
 
   public logout(): void {
     this.isLoggedIn = false;
-    console.log(this.users);
-
     this._router.navigate(['/login']);
   }
 
-  public signUp(user: { email: string, password: string }) {
-    this.users.concat([user]);
+  public signUp(user: { email: string, password: string }): Observable<boolean> {
+    this.users = this.users.concat([user]);
     this.isLoggedIn = true;
-    this._router.navigate(['']);
+    return this.login(user);
   }
 }

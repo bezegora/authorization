@@ -1,8 +1,12 @@
 <form [formGroup]="signUpFormGroup" (ngSubmit)="onSubmit()">
+  <h1>Sign Up</h1>
   <div class="email">
     <label for="email">Email Address:</label>
     <input id="email" formControlName="email" type="email" required />
-    <div class="errors" *ngIf="email?.invalid && email?.touched">
+    <div
+      class="errors"
+      *ngIf="(email?.invalid && email?.touched)"
+    >
       <div *ngIf="email?.errors?.['email']" class="errors">
         Введите корректный email
       </div>
@@ -23,9 +27,21 @@
       </div>
     </div>
   </div>
-  <button class="sign-up" type="submit" [disabled]="!signUpFormGroup.valid">
-    Sign Up
-  </button>
+  <div class="button">
+    <button
+      *ngIf="btnShowUp$ | async; else skeleton"
+      class="sign-up"
+      type="submit"
+      [disabled]="!signUpFormGroup.valid"
+    >
+      Sign Up
+    </button>
+    <ng-template #skeleton>
+      <div class="spinning-skeleton">
+        <div class="spinner"></div>
+      </div>
+    </ng-template>
+  </div>
   <div class="footer">
     <span (click)="toLogin()">&#8592; Back to Login</span>
   </div>

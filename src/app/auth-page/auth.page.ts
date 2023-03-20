@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
-import { Observable, of, tap } from 'rxjs';
+import { Router } from '@angular/router';
+import { finalize, Observable, of, tap } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -12,9 +13,11 @@ export class AuthPage implements OnInit {
 
   public btnShowUp$: Observable<boolean> = of(true);
   public formGroup!: FormGroup;
+  public isIncorrect: boolean = false;
 
   constructor(
-    private _authServie: AuthService
+    private _authServie: AuthService,
+    private _router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -32,9 +35,14 @@ export class AuthPage implements OnInit {
 
 
   public onSubmit() {
-    // this.formGroup.
     this.btnShowUp$ = of(false);
-    this.btnShowUp$ = this._authServie.login(this.formGroup.value);
+    this.btnShowUp$ = this._authServie.login(this.formGroup.value).pipe(
+      finalize(() => {
+        this.isIncorrect = true;
+        this.formGroup.markAsTouched();
+        this.formGroup.controls['password'].reset();
+      })
+    );
   }
 
   get email() {
@@ -43,5 +51,9 @@ export class AuthPage implements OnInit {
 
   get password() {
     return this.formGroup.get('password');
+  }
+
+  public toSignUp() {
+    this._router.navigate(['/sign-up']);
   }
 }

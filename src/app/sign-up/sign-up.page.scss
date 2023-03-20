@@ -1,8 +1,9 @@
-div:not(div.footer, div.sec-2, div.errors),
+div:not(div.footer, div.sec-2, div.errors, div.spinning-skeleton, div.spinner),
 form {
   display: flex;
   flex-direction: column;
   box-shadow: 0 0 2em #e6e9f9;
+  justify-content: center;
 }
 
 form {
@@ -20,14 +21,31 @@ form {
   border-radius: 20px;
 }
 
-.sign-up {
+div.button {
   padding: 1em;
   background: #3e4684;
   color: white;
   border: none;
   border-radius: 30px;
   font-weight: 600;
+  height: 40px;
   cursor: pointer;
+}
+
+.sign-up {
+  height: 40px;
+  background-color: #3e4684;
+  color: white;
+  cursor: pointer;
+  border: none;
+  font-weight: bold;
+  font-size: large;
+}
+
+div.button:has(.sign-up:disabled, div.spinning-skeleton),
+.sign-up:disabled {
+  background-color: #595d7c;
+  cursor: default;
 }
 
 input {
@@ -48,4 +66,32 @@ form > div:not(span) {
 div.errors {
   color: palevioletred;
   box-shadow: none;
+}
+
+div.spinning-skeleton {
+  background-color: #595d7c;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  flex-direction: column;
+}
+
+div.spinning-skeleton div.spinner {
+  width: 2em;
+  height: 2em;
+  border: 3px solid #f3f3f3;
+  border-top: 3px solid #3e4684;
+  border-radius: 100%;
+  margin: auto;
+  animation: spin 1s infinite ease-in;
+  padding: 0;
+}
+
+@keyframes spin {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

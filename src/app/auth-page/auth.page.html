@@ -1,54 +1,51 @@
-<div class="container">
-  <h1>Authorization</h1>
-  <form id="authForm" [formGroup]="formGroup" (ngSubmit)="onSubmit()">
-    <span class="label-holder">
-      <label for="email">Email:</label>
-    </span>
-    <span class="input-holder">
-      <input id="email" type="email" formControlName="email" required />
-      <div
-        *ngIf="email?.invalid && (email?.dirty || email?.touched)"
-        class="alert alert-danger"
-      >
-        <div *ngIf="email?.errors?.['required']">Email is required.</div>
-        <div *ngIf="email?.errors?.['email']">Enter normalny email.</div>
+<form [formGroup]="formGroup" (ngSubmit)="onSubmit()">
+  <h1>Login</h1>
+  <div class="email">
+    <label for="email">Email Address:</label>
+    <input id="email" formControlName="email" type="email" required />
+    <div
+      class="errors"
+      *ngIf="(email?.invalid && email?.touched) || isIncorrect"
+    >
+      <div *ngIf="email?.errors?.['email']" class="errors">
+        Введите корректный email
       </div>
-    </span>
-    <span class="label-holder">
-      <label for="password">Password:</label>
-    </span>
-    <span class="input-holder">
-      <input
-        id="password"
-        type="password"
-        formControlName="password"
-        required
-      />
-      <div
-        *ngIf="password?.invalid && (password?.dirty || password?.touched)"
-        class="alert alert-danger"
-      >
-        <div *ngIf="password?.errors?.['required']">Password is required.</div>
-        <div *ngIf="password?.errors?.['minlength']">
-          Password must be at least 5 characters long.
-        </div>
+      <div *ngIf="email?.errors?.['required']" class="errors">
+        Поле является обязательным для заполнения
       </div>
-    </span>
-  </form>
-  <span class="input-holder btn">
+      <div *ngIf="isIncorrect" class="errors">
+        Неправильно введен пароль или email
+      </div>
+    </div>
+  </div>
+  <div class="password">
+    <label for="password">Password:</label>
+    <input id="password" formControlName="password" type="password" required />
+    <div class="errors" *ngIf="password?.invalid && password?.touched">
+      <div *ngIf="password?.errors?.['minlength']" class="errors">
+        Минимальная длина пароля 5 символов
+      </div>
+      <div *ngIf="password?.errors?.['required']" class="errors">
+        Поле является обязательным для заполнения
+      </div>
+    </div>
+  </div>
+  <div class="button">
     <button
       *ngIf="btnShowUp$ | async; else skeleton"
+      class="login"
       type="submit"
-      [disabled]="formGroup.invalid"
-      form="authForm"
+      [disabled]="!formGroup.valid"
     >
-      Log In
+      Sign Up
     </button>
-    <ng-template class="spinning-skeleton" #skeleton>
+    <ng-template #skeleton>
       <div class="spinning-skeleton">
         <div class="spinner"></div>
       </div>
     </ng-template>
-  </span>
-  <div><a href="/sign-up">SignUp</a></div>
-</div>
+  </div>
+  <div class="footer">
+    <span (click)="toSignUp()">Sign Up</span>
+  </div>
+</form>

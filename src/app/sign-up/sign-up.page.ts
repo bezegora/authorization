@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { finalize, Observable, of } from 'rxjs';
 import { AuthService } from '../auth.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { AuthService } from '../auth.service';
 export class SignUpPage {
 
   public signUpFormGroup: FormGroup;
+  public btnShowUp$: Observable<boolean> = of(true);
 
   constructor(
     private _router: Router,
@@ -33,8 +35,13 @@ export class SignUpPage {
   }
 
   public onSubmit() {
-    console.log(this.signUpFormGroup.value);
-    this._authService.signUp(this.signUpFormGroup.value);
+    this.btnShowUp$ = of(false);
+    this.btnShowUp$ = this._authService.signUp(this.signUpFormGroup.value).pipe(
+      finalize(() => {
+        this.signUpFormGroup.markAsTouched();
+        this.signUpFormGroup.controls['password'].reset();
+      })
+    );
   }
 
   get email() {
